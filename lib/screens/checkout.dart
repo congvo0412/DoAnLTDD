@@ -1,12 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import '../models/product_model.dart';
 
 class CheckoutPage extends StatelessWidget{
-  const CheckoutPage ({Key ?key}): super(key: key);
-
+  const CheckoutPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context){
+    final Product args = ModalRoute.of(context)!.settings.arguments as Product;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -20,12 +20,12 @@ class CheckoutPage extends StatelessWidget{
         child:ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.only(top:15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image(
-                  image: AssetImage('assets/images/prd2.jpg'),
+                  image: AssetImage('assets/images/${args.image}'),
                   width: 180,
                   height: 180,
                   fit: BoxFit.fill,
@@ -36,17 +36,17 @@ class CheckoutPage extends StatelessWidget{
                   children: [
                     Padding (
                       padding: EdgeInsets.all(10),
-                      child: Text("Sản phẩm: Áo thun",
+                      child: Text("Sản phẩm: ${args.name}",
                       style:TextStyle(fontSize:16, fontWeight: FontWeight.bold,))
                     ),
                      Padding (
                       padding: EdgeInsets.all(10),
-                      child: Text("Size: L",
+                      child: Text("Size: ${args.size}",
                       style:TextStyle(fontSize:16, fontWeight: FontWeight.bold,))
                      ),
                       Padding (
                       padding: EdgeInsets.all(10),
-                      child: Text("Giá tiền: 200.000 VND",
+                      child: Text("Giá tiền: ${args.price.toString()}00 VNĐ",
                       style:TextStyle(fontSize:16, fontWeight: FontWeight.bold,))
                     ),
                     Padding (
@@ -74,7 +74,7 @@ class CheckoutPage extends StatelessWidget{
         SizedBox(
                 height: 10,
               ),
-        _checkoutPay(),
+        _checkoutPay(context),
         ],
       ),
     ),
@@ -192,7 +192,8 @@ Widget _checkoutAddress(){
   ],
   );
 }
-Widget _checkoutPay(){
+Widget _checkoutPay(context){
+  final Product args = ModalRoute.of(context)!.settings.arguments as Product;
   return Container(
    color:Colors.grey.shade300,
    height:200,
@@ -219,11 +220,11 @@ Widget _checkoutPay(){
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children:[
-        Text("200.000 VND",style:TextStyle(fontSize:16)),
+        Text("${args.price}00 VNĐ",style:TextStyle(fontSize:16)),
         SizedBox(height: 5),
-        Text("30.000 VND",style:TextStyle(fontSize:16)),
+        Text("30.000 VNĐ",style:TextStyle(fontSize:16)),
         SizedBox(height: 5),
-        Text("230.000.000 VND",style:TextStyle(fontSize:18,fontWeight:FontWeight.bold,)), 
+        Text("${args.price + 30.000}00 VNĐ",style:TextStyle(fontSize:18,fontWeight:FontWeight.bold,)), 
      ],
     ),
     ),
@@ -237,6 +238,7 @@ Widget _checkoutPay(){
 class BottomBar extends StatelessWidget{
   @override
   Widget build(BuildContext context){
+  final Product args = ModalRoute.of(context)!.settings.arguments as Product;
   return BottomAppBar(
       child: Container(
         height: 50.0,
@@ -252,7 +254,7 @@ class BottomBar extends StatelessWidget{
               children:[
                 SizedBox(height:5),
                 Text("Tổng thanh toán",style:TextStyle(fontSize:16)),
-                Text("230.000 VND",style:TextStyle(fontSize:16,fontWeight:FontWeight.bold,color:Colors.deepOrange)),
+                Text("${args.price + 30.000}00 VNĐ",style:TextStyle(fontSize:16,fontWeight:FontWeight.bold,color:Colors.deepOrange)),
               ],
             ),
             SizedBox(width:10),

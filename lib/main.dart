@@ -12,7 +12,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      home: ShopingTab(),
+      initialRoute: '/',
+      routes:{
+        '/':(context) =>const ShopingTab(),
+        '/homepage':(context) =>const HomePage(),
+        '/categorypage':(context) =>const CategoryPage(),
+        '/notificationpage':(context) =>const NotificationPage(),
+        '/loginscreen':(context) =>const LoginScreen(),
+      },
     );
   }
 }

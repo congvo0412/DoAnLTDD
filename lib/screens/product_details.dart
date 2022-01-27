@@ -3,15 +3,10 @@ import '../models/product_model.dart';
 import '../screens/checkout.dart';
 import 'package:readmore/readmore.dart';
 
-class DetailPage extends StatefulWidget{
-  final assetPath, productPrice, productName;
-  const DetailPage({this.assetPath, this. productPrice, this.productName});
+class DetailPage extends StatelessWidget{
+  final Product product;
+  DetailPage({required this.product});
 
-  @override
-  _MyCustomState createState() => _MyCustomState();
-}
-class _MyCustomState extends State<DetailPage> {
-  int _count = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +47,7 @@ class _MyCustomState extends State<DetailPage> {
                     ),
                     color: Colors.grey.shade200,
                   ),
-                  child: _productDetail()),
+                  child: _productDetail(context)),
             ),
           ],
         ),
@@ -78,7 +73,7 @@ class _MyCustomState extends State<DetailPage> {
         ),
         Center(
           child: Image.asset(
-            'assets/images/prd2.jpg',
+            'assets/images/${product.image}',
             height: 350,
             fit: BoxFit.cover,
           ),
@@ -87,7 +82,7 @@ class _MyCustomState extends State<DetailPage> {
     );
   }
 
-  Widget _productDetail() {
+  Widget _productDetail(BuildContext context) {
     return ListView(
       physics: BouncingScrollPhysics(),
       children: [
@@ -126,7 +121,7 @@ class _MyCustomState extends State<DetailPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Áo Thun',
+              '${product.name}',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
             Container(
@@ -138,7 +133,7 @@ class _MyCustomState extends State<DetailPage> {
                   ),
                   color: Colors.deepOrange),
               child: Text(
-                '200.000 VND',
+                '${product.price}00 VNĐ',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -166,7 +161,7 @@ class _MyCustomState extends State<DetailPage> {
                   ),
                   color: Colors.deepOrange),
               child: Text(
-                'S   M   L   XL',
+                '${product.size}',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -181,7 +176,7 @@ class _MyCustomState extends State<DetailPage> {
         Padding(
           padding: const EdgeInsets.only(right: 14),
           child: ReadMoreText(
-              'MÔ TẢ SẢN PHẨM: Áo Thun Cổ Tròn Đơn Giản M25 | Chất liệu: Cotton 4 chiều | Thành phần: 92% cotton 8%',
+              'MÔ TẢ SẢN PHẨM: ${product.desc}',
               trimLines: 1,
               style:TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),
               colorClickableText: Colors.deepOrange,
@@ -194,18 +189,15 @@ class _MyCustomState extends State<DetailPage> {
         SizedBox(
           height: 14,
         ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(
             children: [
               ElevatedButton(
                 onPressed: () {
-                  if (_count > 1) {
-                  setState(() => _count--);
-                  }
-                  else{setState(() => _count = 1);}
                 },
                 child: Icon(Icons.remove),
-                style: ElevatedButton.styleFrom(primary: Colors.grey.shade400,
+                style: ElevatedButton.styleFrom(primary: Colors.grey,
                                                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5)
                                                 ),
               ),
@@ -213,7 +205,7 @@ class _MyCustomState extends State<DetailPage> {
                 width: 14,
               ),
               Text(
-                '$_count',
+                '1',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
               SizedBox(
@@ -221,30 +213,43 @@ class _MyCustomState extends State<DetailPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  setState(() => _count++);
+                 
                 },
                 child: Icon(Icons.add),
-                style: ElevatedButton.styleFrom(primary: Colors.grey.shade400,
+                style: ElevatedButton.styleFrom(primary: Colors.grey,
                                                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5)
                                                ),
               ),
             ],
           ),
+          Container(
+            padding:EdgeInsets.all(4),
+            decoration: const BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.all( Radius.circular(5))
+                    ),
+            child: IconButton(
+              icon:Icon(Icons.add_shopping_cart,color:Colors.white),
+              onPressed: () {},
+            ),
+          ),
           Padding(
-            padding: const EdgeInsets.only(right: 14),
+            padding: const EdgeInsets.only(right: 8),
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Colors.lightBlue,
-                                                ),
+              style: ElevatedButton.styleFrom(primary: Colors.lightBlue,),
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 18, horizontal: 30),
+                padding: EdgeInsets.symmetric(vertical: 17, horizontal: 20),
                 child: Text(
                   'Đặt hàng',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              onPressed: () {
-                Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => CheckoutPage()));
+              onPressed: ()  {
+                       Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>const  CheckoutPage(),
+                        settings: RouteSettings(
+                          arguments: product,
+                        )));
               },
             ),
           ),

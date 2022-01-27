@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'product_details.dart';
+import '../models/product_model.dart';
 import 'cart.dart';
 
 class CategoryTab extends StatelessWidget {
@@ -7,39 +8,38 @@ class CategoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView(
-        children: <Widget>[
-          const SizedBox(height: 15.0),
-          Column(     
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  _buildCard('Áo Thun', '200.000VNĐ','assets/images/prd2.jpg', context),
-                  SizedBox (height: 20),
-                  _buildCard('Áo Thun', '200.000VNĐ','assets/images/prd3.jpg', context),
-                  SizedBox (height: 20),
-                  _buildCard('Áo Thun', '200.000VNĐ','assets/images/prd2.jpg', context),
-                  SizedBox (height: 20),
-                  _buildCard('Áo Thun', '200.000VNĐ','assets/images/prd3.jpg', context),
-                  SizedBox (height: 20),
-                  _buildCard('Áo Thun', '200.000VNĐ','assets/images/prd2.jpg', context),
-                  SizedBox (height: 20),
-                  _buildCard('Áo Thun', '200.000VNĐ','assets/images/prd3.jpg', context)        
-                ],
-              ),
-          const SizedBox(height: 80)
-        ],
+      body: SafeArea(
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          children:[
+          const SizedBox(height:15),
+                  _buildCard(),    
+          const SizedBox(height: 200),
+          ]
+        ),
       ),
     );
   }
 
-  Widget _buildCard(String name, String price, String imgPath, context) {
-    return 
-         Row(
+  Widget _buildCard() {
+    return GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: products.length,
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(  
+                        crossAxisCount: 2,
+                        childAspectRatio: 6/7, 
+                        crossAxisSpacing: 5,  
+                        mainAxisSpacing: 10, 
+              ),  
+              itemBuilder: (BuildContext context, int index){  
+                return Container(
+                  child:Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-              Container(
-              margin: EdgeInsets.all(0),
-              padding: EdgeInsets.fromLTRB(10,10,10,10),
+                Container(
+                  height:230,
+                  width:180,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(15)
@@ -47,28 +47,24 @@ class CategoryTab extends StatelessWidget {
                       child: Stack(
                       children: <Widget> [
                         GestureDetector(
+                          
                           onTap:(){
                           Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => DetailPage(
-                            assetPath :imgPath,
-                            productPrice :price,
-                            productName :name,
-                          )));
+                          MaterialPageRoute(builder: (_) => DetailPage(product: products[index])));
                           },
-                          child: Hero(
-                            tag: imgPath,
-                            child: Image(
-                              height: 140,
-                              width: 150,
-                              image: AssetImage(imgPath),
+                            child: Padding
+                            ( padding:EdgeInsets.only(left:10),
+                              child: Image(
+                              height: 160,
+                              width: 160,
+                              image: AssetImage("assets/images/${products[index].image}"),
                               fit: BoxFit.cover,
-                              
-                            ),
-                          ),
+                            ),  
+                            ),                        
                         ),
                         Positioned(
-                              top:145 ,
-                              right: 1,
+                              bottom:5,
+                              right: 5,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
@@ -88,80 +84,21 @@ class CategoryTab extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Padding(padding: EdgeInsets.only(top:150),
-                            child:Text("200.000 VND", style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),
+                            Padding(padding: EdgeInsets.fromLTRB(10,170,0,0),
+                            child:Text("${products[index].price}00 VNĐ", style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),
                             ), 
                             ), 
-                            Padding(padding: EdgeInsets.only(top:170),
-                            child:Text("Áo thun", style: TextStyle(fontWeight: FontWeight.w600),
-                            ), 
-                            ),    
-                      ],
-                    ),
-    ),
-    Container(
-              margin: EdgeInsets.all(0),
-              padding: EdgeInsets.fromLTRB(10,10,10,10),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(15)
-                            ),
-                      child: Stack(
-                      children: <Widget> [
-                        GestureDetector(
-                          onTap:(){
-                          Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => DetailPage(
-                            assetPath :imgPath,
-                            productPrice :price,
-                            productName :name,
-                          )));
-                          },
-                          child: Hero(
-                            tag: imgPath,
-                            child: Image(
-                              height: 140,
-                              width: 150,
-                              image: AssetImage(imgPath),
-                              fit: BoxFit.cover,
-                              
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                              top:145 ,
-                              right: 1,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: EdgeInsets.all(0),
-                                    child: IconButton(
-                                              icon: Icon(
-                                                Icons.add_shopping_cart,
-                                                color: Colors.deepOrange,
-                                              ),
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) => CartPage()));
-                                    },
-                                    ),
-                              ),
-                                ],
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(top:150),
-                            child:Text("200.000 VND", style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),
-                            ), 
-                            ), 
-                            Padding(padding: EdgeInsets.only(top:170),
-                            child:Text("Áo thun", style: TextStyle(fontWeight: FontWeight.w600),
+                            Padding(padding: EdgeInsets.fromLTRB(10,190,0,0),
+                            child:Text(products[index].name, style: TextStyle(fontWeight: FontWeight.w600),
                             ), 
                             ),    
                       ],
                     ),
-    )
-    ]
-  );
+                ),
+              ],
+              ),
+            );
+      }
+    );
   }
 }
