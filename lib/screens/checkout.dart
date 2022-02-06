@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/product_model.dart';
+import '../screens/checkout_success.dart';
 
 class CheckoutPage extends StatelessWidget{
   const CheckoutPage({Key? key}) : super(key: key);
@@ -267,7 +268,13 @@ class BottomBar extends StatelessWidget{
                   child: Text("Đặt hàng",
                         style:TextStyle(fontSize:19,)),
                 ),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>const  CheckoutSuccessPage(),
+                        settings: RouteSettings(
+                          arguments: args,
+                        )));
+                },
               ),
             ),
           ],

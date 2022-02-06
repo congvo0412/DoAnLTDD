@@ -131,7 +131,7 @@ class DetailPage extends StatelessWidget{
                     topLeft: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
                   ),
-                  color: Colors.deepOrange),
+                  color: Colors.lightBlue),
               child: Text(
                 '${product.price}00 VNĐ',
                 style: TextStyle(
@@ -159,7 +159,7 @@ class DetailPage extends StatelessWidget{
                     topLeft: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
                   ),
-                  color: Colors.deepOrange),
+                  color: Colors.lightBlue),
               child: Text(
                 '${product.size}',
                 style: TextStyle(
@@ -225,7 +225,7 @@ class DetailPage extends StatelessWidget{
           Container(
             padding:EdgeInsets.all(4),
             decoration: const BoxDecoration(
-                        color: Colors.lightBlue,
+                        color: Colors.deepOrange,
                         borderRadius: BorderRadius.all( Radius.circular(5))
                     ),
             child: IconButton(
@@ -236,7 +236,7 @@ class DetailPage extends StatelessWidget{
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Colors.lightBlue,),
+              style: ElevatedButton.styleFrom(primary: Colors.deepOrange,),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 17, horizontal: 20),
                 child: Text(
