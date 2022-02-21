@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../models/product_model.dart';
 import '../screens/checkout_success.dart';
-import 'oder_cancel.dart';
+import 'order_cancel.dart';
 
 class OderDetailPage extends StatelessWidget{
   const OderDetailPage({Key? key}) : super(key: key);
