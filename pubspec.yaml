@@ -29,6 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: ^0.13.4
+  fluttertoast: any
   dropdown_button2: ^1.0.0
   readmore: ^2.0.2
 

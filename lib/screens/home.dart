@@ -152,7 +152,7 @@ class _HomePageDetayState extends State<HomePageDetay> {
                   child: Column(
                             children:[
                               Divider(color: Colors.black),  
-                              Text("Sản Phẩm Bán Chạy",
+                              Text("Sản Phẩm Nổi Bật",
                               textAlign: TextAlign.left,
                               style: TextStyle(fontSize:15,
                                               fontWeight: FontWeight.bold),

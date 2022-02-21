@@ -95,8 +95,27 @@ class AccountPage extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ShopingTab()));
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                             AlertDialog(
+                              content: Text("Bạn có chắc chắn muốn đăng xuất không?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context,'/');                                
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            )
+                        );
                       },
                       child: Text(
                         "Đăng xuất",

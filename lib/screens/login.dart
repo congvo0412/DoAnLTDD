@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../screens/register.dart';
 import '../widgets/custom_checkbox.dart';
 import '../widgets/forgot_screen.dart';
 import '../widgets/primary_btn.dart';
+import 'package:http/http.dart' as http;
 import 'theme.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -13,6 +16,32 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool passwordVisible = false;
+  TextEditingController user = TextEditingController();
+  TextEditingController pass = TextEditingController();
+  String msg ='';
+  String username ='';
+
+  Future _login() async {
+    var url = Uri.parse("http://192.168.1.48/userdata/login.php");
+    var response = await http.post(url, body: {
+      "username": user.text,
+      "password": pass.text,
+    });
+    var dataUser = json.decode(response.body);
+    if(dataUser == "Error")
+     {
+       setState((){
+         msg ="Sai tài khoản hoặc mật khẩu";
+       });
+     }
+     else{
+       Navigator.pushNamed(context, '/homepage');
+       setState(() {
+          username = dataUser[0]['username'];
+          });
+     }
+     return dataUser;
+  }
   void togglePassword() {
     setState(() {
       passwordVisible = !passwordVisible;
@@ -59,8 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                       child: TextFormField(
+                        controller:user,
                         decoration: InputDecoration(
-                          hintText: 'Email',
+                          hintText: 'Username',
                           hintStyle: heading6.copyWith(color: textGrey),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -77,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                       child: TextFormField(
+                        controller:pass,
                         obscureText: !passwordVisible,
                         decoration: InputDecoration(
                           hintText: 'Password',
@@ -99,7 +130,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(
-                height: 32,
+                height: 20,
+              ),
+              Text(msg, style: TextStyle(fontSize:18,color:Colors.red)),
+              SizedBox(
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -114,10 +149,19 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 32,
               ),
-              CustomPrimaryButton(
-                buttonColor: Colors.orange.shade900,
-                textValue: 'Đăng Nhập',
-                textColor: Colors.white,
+              Padding(
+                padding:EdgeInsets.only(left:100),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.deepOrange,),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 13, 20, 13),
+                    child: Text("Đăng Nhập",
+                          style:TextStyle(fontSize:19,)),
+                  ),
+                  onPressed: (){
+                    _login();
+                  },
+                ),
               ),
               SizedBox(
                 height: 24,
@@ -129,23 +173,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(
-                height: 24,
+                height: 15,
               ),
-              CustomPrimaryButton(
-                buttonColor: Color(0xfffbfbfb),
-                textValue: 'Đăng nhập với Google',
-                textColor: textBlack,
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              CustomPrimaryButton(
-                buttonColor: Color(0xfffbfbfb),
-                textValue: 'Đăng nhập với Facebook',
-                textColor: textBlack,
+              Padding(
+                padding: EdgeInsets.only(left:85),
+                child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Đăng nhập với Google",
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        )),
               ),
               SizedBox(
-                height: 50,
+                height: 5,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left:75),
+                child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Đăng nhập với Facebook",
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        )),
+              ),
+              SizedBox(
+                height: 15,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

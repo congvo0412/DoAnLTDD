@@ -1,12 +1,17 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../models/product_model.dart';
 import '../screens/checkout.dart';
+import '../screens/cart.dart';
 import 'package:readmore/readmore.dart';
 
-class DetailPage extends StatelessWidget{
+class DetailPage extends StatefulWidget{
   final Product product;
   DetailPage({required this.product});
-
+  @override
+  _DetailPageState createState() => _DetailPageState();
+}
+class _DetailPageState extends State<DetailPage>{
+  int _count = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +78,7 @@ class DetailPage extends StatelessWidget{
         ),
         Center(
           child: Image.asset(
-            'assets/images/${product.image}',
+            'assets/images/${widget.product.image}',
             height: 350,
             fit: BoxFit.cover,
           ),
@@ -121,7 +126,7 @@ class DetailPage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${product.name}',
+              '${widget.product.name}',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
             Container(
@@ -133,7 +138,7 @@ class DetailPage extends StatelessWidget{
                   ),
                   color: Colors.lightBlue),
               child: Text(
-                '${product.price}00 VNĐ',
+                '${widget.product.price}00 VNĐ',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -161,7 +166,7 @@ class DetailPage extends StatelessWidget{
                   ),
                   color: Colors.lightBlue),
               child: Text(
-                '${product.size}',
+                '${widget.product.size}',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -176,7 +181,7 @@ class DetailPage extends StatelessWidget{
         Padding(
           padding: const EdgeInsets.only(right: 14),
           child: ReadMoreText(
-              'MÔ TẢ SẢN PHẨM: ${product.desc}',
+              'MÔ TẢ SẢN PHẨM: ${widget.product.desc}',
               trimLines: 1,
               style:TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),
               colorClickableText: Colors.deepOrange,
@@ -195,6 +200,11 @@ class DetailPage extends StatelessWidget{
             children: [
               ElevatedButton(
                 onPressed: () {
+                  setState(() {
+                    if (_count > 1) {
+                      _count--;
+                    }
+                  });
                 },
                 child: Icon(Icons.remove),
                 style: ElevatedButton.styleFrom(primary: Colors.grey,
@@ -205,7 +215,7 @@ class DetailPage extends StatelessWidget{
                 width: 14,
               ),
               Text(
-                '1',
+                _count.toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
               SizedBox(
@@ -213,7 +223,9 @@ class DetailPage extends StatelessWidget{
               ),
               ElevatedButton(
                 onPressed: () {
-                 
+                 setState(() {
+                      _count++;
+                  });
                 },
                 child: Icon(Icons.add),
                 style: ElevatedButton.styleFrom(primary: Colors.grey,
@@ -230,7 +242,13 @@ class DetailPage extends StatelessWidget{
                     ),
             child: IconButton(
               icon:Icon(Icons.add_shopping_cart,color:Colors.white),
-              onPressed: () {},
+              onPressed: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => CartPage(),
+            ),
+          );
+              },
             ),
           ),
           Padding(
@@ -248,7 +266,7 @@ class DetailPage extends StatelessWidget{
                        Navigator.push(context,
                         MaterialPageRoute(builder: (context) =>const  CheckoutPage(),
                         settings: RouteSettings(
-                          arguments: product,
+                          arguments: widget.product,
                         )));
               },
             ),

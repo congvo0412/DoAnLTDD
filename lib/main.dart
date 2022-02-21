@@ -3,10 +3,12 @@ import 'package:doan_ltdd/screens/home.dart';
 import 'package:doan_ltdd/screens/category.dart';
 import 'package:doan_ltdd/screens/notification.dart';
 import 'package:doan_ltdd/screens/login.dart';
+import 'package:doan_ltdd/screens/account.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  String username ='';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,19 +16,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primaryColor: Colors.white),
       initialRoute: '/',
       routes:{
-        '/':(context) =>const ShopingTab(),
-        '/homepage':(context) =>const HomePage(),
+        '/':(context) =>const LoginScreen(),
+        '/homepage':(context) => ShopingTab(),
         '/categorypage':(context) =>const CategoryPage(),
         '/notificationpage':(context) =>const NotificationPage(),
-        '/loginscreen':(context) =>const LoginScreen(),
+        '/account':(context) =>const AccountPage(),
       },
     );
   }
 }
 
 class ShopingTab extends StatelessWidget {
-  const ShopingTab({Key? key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: ButtomNavigatorBar());
@@ -75,7 +76,7 @@ class ShopingTab extends StatelessWidget {
             ),
           ),
           body: const TabBarView(
-            children: [HomePage(),CategoryPage(), NotificationPage(), LoginScreen()],
+            children: [HomePage(),CategoryPage(), NotificationPage(), AccountPage()],
           ),
         ),
       ),

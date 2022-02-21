@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import '../utilities/CustomTextStyle.dart';
 import '../utilities/CustomUtils.dart';
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
-
+  @override
+  _CartPageState createState() => _CartPageState();
+}
+class _CartPageState extends State<CartPage> {
+  int _count = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,28 +143,35 @@ class CartPage extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
-                                  Icon(
-                                    Icons.remove,
-                                    size: 24,
-                                    color: Colors.grey.shade700,
-                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          if (_count > 1) {
+                                            _count--;
+                                          }
+                                        });
+                                      },
+                                       icon: Icon(Icons.remove),                                   
+                                    ),
                                   Container(
                                     color: Colors.grey.shade200,
-                                    padding: const EdgeInsets.only(
-                                        bottom: 2, right: 12, left: 12),
+                                    padding: const EdgeInsets.all(
+                                       0),
                                     child: Text(
-                                      "1",
+                                      _count.toString(),
                                       style:
                                           CustomTextStyle.textFormFieldSemiBold,
                                     ),
                                   ),
-                                  Icon(
-                                    Icons.add,
-                                    size: 24,
-                                    color: Colors.grey.shade700,
-                                  )
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                            _count++;
+                                        });
+                                      },
+                                       icon: Icon(Icons.add),                                   
+                                    ),
                                 ],
                               ),
                             )

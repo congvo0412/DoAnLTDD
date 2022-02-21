@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../widgets/custom_checkbox.dart';
 import '../widgets/primary_btn.dart';
+import 'home.dart';
 import 'theme.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -9,6 +12,29 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController user = new TextEditingController();
+  TextEditingController pass = new TextEditingController();
+  String msg ='';
+
+  Future _register() async {
+    var url = "http://192.168.1.48/userdata/register.php";
+    var response = await http.post(Uri.parse(url), body: {
+      "username": user.text,
+      "password": pass.text,
+    });
+    var dataUser = json.decode(response.body);
+    if(dataUser == "Error")
+     {
+      setState((){
+         msg ="Đăng ký thành công";
+       });
+     }
+     else{
+       setState((){
+         msg ="Đăng ký thành công";
+       });
+     }
+  }
   bool passwordVisible = false;
   bool passwordConfrimationVisible = false;
   void togglePassword() {
@@ -57,8 +83,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                       child: TextFormField(
+                        controller: user,
                         decoration: InputDecoration(
-                          hintText: 'Email',
+                          hintText: 'Username',
                           hintStyle: heading6.copyWith(color: textGrey),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -75,6 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                       child: TextFormField(
+                        controller: pass,
                         obscureText: !passwordVisible,
                         decoration: InputDecoration(
                           hintText: 'Password',
@@ -96,40 +124,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: 32,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: textWhiteGrey,
-                        borderRadius: BorderRadius.circular(14.0),
-                      ),
-                      child: TextFormField(
-                        obscureText: !passwordConfrimationVisible,
-                        decoration: InputDecoration(
-                          hintText: 'Xác nhận Password',
-                          hintStyle: heading6.copyWith(color: textGrey),
-                          suffixIcon: IconButton(
-                            color: textGrey,
-                            splashRadius: 1,
-                            icon: Icon(passwordConfrimationVisible
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined),
-                            onPressed: () {
-                              setState(() {
-                                passwordConfrimationVisible =
-                                    !passwordConfrimationVisible;
-                              });
-                            },
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 32,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -149,6 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         'Terms & Conditions',
                         style: regular16pt.copyWith(color: primaryBlue),
                       ),
+                      
                     ],
                   ),
                 ],
@@ -156,13 +156,29 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: 32,
               ),
-              CustomPrimaryButton(
-                buttonColor: Colors.orange.shade900,
-                textValue: 'Đăng Kí',
-                textColor: Colors.white,
+              Padding(
+                padding:EdgeInsets.only(left:110),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.deepOrange,),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 13, 20, 13),
+                    child: Text("Đăng Ký",
+                          style:TextStyle(fontSize:19,)),
+                  ),
+                  onPressed: (){
+                    _register();
+                  },
+                ),
               ),
               SizedBox(
-                height: 50,
+                height: 30,
+              ),
+              Padding(
+                padding:EdgeInsets.only(left:90),
+                child: Text(msg,style:TextStyle(fontSize:20,color:Colors.green,fontWeight: FontWeight.bold,)),
+              ),
+              SizedBox(
+                height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

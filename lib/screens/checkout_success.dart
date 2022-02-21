@@ -60,7 +60,12 @@ class CheckoutSuccessPage extends StatelessWidget{
                   style: TextStyle(fontSize: 16),
                 ),
               ),
-              onPressed: ()  {               
+              onPressed: ()  { 
+                Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>const CheckoutSuccessPage(),
+                        settings: RouteSettings(
+                          arguments: args,
+                        )));              
               },
             ),
                     ),
@@ -77,7 +82,7 @@ class CheckoutSuccessPage extends StatelessWidget{
               ),
               onPressed: ()  {
                        Navigator.push(context,
-                        MaterialPageRoute(builder: (context) =>const ShopingTab(),
+                        MaterialPageRoute(builder: (context) => ShopingTab(),
                         ));
               },
             ),
