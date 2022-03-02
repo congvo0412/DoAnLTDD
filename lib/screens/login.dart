@@ -62,10 +62,22 @@ class _LoginScreenState extends State<LoginScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Đăng Nhập',
-                    style: heading2.copyWith(color: textBlack),
+                  Padding(
+                  padding: EdgeInsets.only(left:40),
+                  child: Text(
+                    'Welcome to GOLDIE Shop',
+                    style: heading2.copyWith(color: Colors.deepOrange),
+                  ),),
+                  
+                   SizedBox(
+                    height: 20,
                   ),
+                  Padding(
+                  padding: EdgeInsets.only(left:30),
+                  child: Text(
+                    'Đăng nhập',
+                    style: heading2.copyWith(color: textBlack),
+                  ),),
                   SizedBox(
                     height: 20,
                   ),

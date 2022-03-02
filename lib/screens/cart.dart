@@ -52,7 +52,7 @@ class _CartPageState extends State<CartPage> {
               Container(
                 margin: EdgeInsets.only(right: 30),
                 child: Text(
-                  "\600.000VNĐ",
+                  "2.100.000VNĐ",
                   style: CustomTextStyle.textFormFieldBlack.copyWith(
                       color: Colors.orange, fontSize: 16),
                 ),
@@ -117,7 +117,7 @@ class _CartPageState extends State<CartPage> {
                       Container(
                         padding: const EdgeInsets.only(right: 8, top: 4),
                         child: Text(
-                          "Áo thun",
+                          "Áo Sweater",
                           maxLines: 2,
                           softWrap: true,
                           style: CustomTextStyle.textFormFieldSemiBold
@@ -126,7 +126,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                       Utils.getSizedBox(height: 6),
                       Text(
-                        "Size M",
+                        "Size L",
                         style: CustomTextStyle.textFormFieldRegular
                             .copyWith(color: Colors.grey, fontSize: 14),
                       ),
@@ -135,7 +135,7 @@ class _CartPageState extends State<CartPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              "\200.000VNĐ",
+                              "\700.000VNĐ",
                               style: CustomTextStyle.textFormFieldBlack
                                   .copyWith(color: Colors.deepOrange),
                             ),

@@ -141,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Đồng ý với điều khoản của FUNNY Shop,',
+                        'Đồng ý với điều khoản của GOLDIE Shop,',
                         style: regular16pt.copyWith(color: textGrey),
                       ),
                       Text(

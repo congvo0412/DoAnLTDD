@@ -7,6 +7,8 @@ import 'package:doan_ltdd/screens/notification.dart';
 import 'package:doan_ltdd/screens/cart.dart';
 import 'package:doan_ltdd/screens/login.dart';
 
+import 'account_infor.dart';
+
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
 
@@ -16,12 +18,12 @@ class AccountPage extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Colors.deepOrange,
-        title: Center(child: Text("Tài khoản của tôi")),
+        title: Center(child: Text("Tài khoản của tôi:\n\t\t\t\t\t\t\t\tcongvo")),
         actions: [
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Icon(Icons.settings),
-          )
+          ),
         ],
       ),
       body: ListView(
@@ -31,7 +33,10 @@ class AccountPage extends StatelessWidget {
               Container(
                   alignment: Alignment.topLeft,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                         Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>const AccountInforPage()));
+                      },
                       child: Text(
                         "Hồ sơ",
                         style: TextStyle(fontSize: 20, color: Colors.black),
